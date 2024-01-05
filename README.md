@@ -1,2 +1,2 @@
 # binary-roboface
- Roboface css drawing
+Drawing a robo-face with css.

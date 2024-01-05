@@ -1,0 +1,118 @@
+:root {
+    --bg-color: #000;
+    --lineaments-color: #fff;
+    --eye-x-padding: 1.85rem;
+    --eye-y-padding: 2.6rem;
+    --eye-radius: 2.85rem;
+    --side-size: 10rem;
+    --mouth-content: "0b101010 0b101010 0b101010 0b101010 0b101010 0b101010";
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    width: 30vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.robot {
+    position: relative;
+    width: var(--side-size);
+    height: calc(var(--side-size) * 0.85);
+    background-color: var(--bg-color);
+    border-radius: 0.4rem;
+    scale: 2;
+}
+
+.robot .eye {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid var(--lineaments-color);
+}
+
+.robot .eye.left {
+    top: var(--eye-y-padding);
+    left: calc(var(--eye-x-padding) * 0.85);
+    width: var(--eye-radius);
+    height: var(--eye-radius);
+    opacity: 0.7;
+}
+
+.robot .eye.left .macula {
+    width: 0.7rem;
+    height: 0.7rem;
+    background: var(--bg-color);
+    border-radius: 50%;
+    position: absolute;
+    left: -0.35rem;
+    top: 0.6rem;
+}
+
+.robot .eye.right {
+    top: calc(var(--eye-y-padding) * 1.11);
+    right: calc(var(--eye-x-padding) * 1.05);
+    width: calc(var(--eye-radius) * 0.85);
+    height: calc(var(--eye-radius) * 0.85);
+}
+
+.robot .eye.right .stroke {
+    width: 1px;
+    height: 100%;
+    background: var(--lineaments-color);  
+    transform-origin: center;
+    position: absolute;
+}
+
+.robot .eye.right .stroke.stroke-2 {
+    transform: translateX(calc(-1px + (var(--eye-radius) * 0.85) / 2 )) rotate(calc((360deg / 6) * 2));
+}
+
+/*
+    To calculate the height of the stroke so that it intersects the circumference of the circle without surpassing it, we can use trigonometry.
+
+    The height of the stroke will be twice the y-coordinate of the point on the circle at the angle of rotation. 
+    The y-coordinate can be calculated using the formula r * sin(theta), where r is the radius of the circle and theta is the angle of rotation.
+
+    In the case of stroke-3, the angle of rotation is (360deg / 6) * 3 = 180deg. 
+    The sin of 180 degrees is 0, so the height of the stroke should be 0 if we strictly follow this calculation.
+
+    However, if you want the stroke to intersect the circle at a different angle, you can adjust the angle in the formula. 
+    For example, if you want the stroke to intersect the circle at 60 degrees, you can set theta = 60deg.
+
+    Please note that CSS does not support trigonometric functions like sin directly. 
+    You would need to use a preprocessor like SASS or LESS, or calculate these values manually and hard-code them. 
+    The sin of 60 degrees is approximately 0.866, so the height of the stroke would be calc(2 * var(--eye-radius) * 0.85 / 2 * 0.866).
+*/
+.robot .eye.right .stroke.stroke-3 {
+    top: 0.1rem;
+    height: calc(2 * var(--eye-radius) * 0.85 / 2 * 0.866);
+    transform: translateX(calc(-1px + (var(--eye-radius) * 0.85) / 1.4 )) rotate(calc((360deg / 6) * 3));
+}
+
+.robot .mouth {
+    top: calc(var(--eye-y-padding) * 2);
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    opacity: 0.8;
+    transform: scale(1.2, 1.5);
+}
+
+.robot .mouth:after {
+    color: var(--lineaments-color);
+    content: var(--mouth-content);
+    font-size: 0.2rem;
+    font-family: monospace;
+    letter-spacing: 0.15rem;
+    word-spacing: -1.5rem;
+}
